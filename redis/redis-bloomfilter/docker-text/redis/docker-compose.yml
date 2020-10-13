@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    # restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./conf/redis.conf:/etc/redis/redis.conf:rw
+      - ./data:/data:rw
+    command:
+      redis-server /etc/redis/redis.conf --appendonly yes
+      # redis-server /etc/redis/redis.conf # RDB
+      # redis-server /etc/redis/redis.conf --appendonly yes # AOF
