@@ -36,28 +36,6 @@ public class RedisConnectionConfig {
     @Value("${spring.redis.jedis.pool.max-active}")
     private Integer maxActive;
 
-    /*
-    @Bean
-    public JedisPoolConfig jedisPool() {
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(maxIdle);
-        jedisPoolConfig.setMaxWaitMillis(maxWait);
-        jedisPoolConfig.setMaxTotal(maxActive);
-        jedisPoolConfig.setMinIdle(minIdle);
-        return jedisPoolConfig;
-    }
-
-    @Bean
-    public RedisStandaloneConfiguration jedisConfig() {
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(host);
-        config.setPort(port);
-        config.setDatabase(database);
-        config.setPassword(RedisPassword.of(password));
-        return config;
-    }
-    */
-
     @Bean
     public JedisPool redisPoolFactory() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
