@@ -56,6 +56,20 @@ spring:
         url-pattern: /druid/*
         login-username: root
         login-password: example
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 0
+    #客户端超时时间单位是毫秒 默认是2000
+    timeout: 2000
+    jedis:
+      pool:
+        min-idle: 10
+        max-idle: 20
+        max-wait: 100
+        max-active: 200
 logging:
   level:
     druid.sql: debug

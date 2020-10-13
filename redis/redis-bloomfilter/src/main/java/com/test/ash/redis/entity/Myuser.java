@@ -1,6 +1,7 @@
 package com.test.ash.redis.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,8 +11,11 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-10-12 00:30:09
  */
-@SuppressWarnings("serial")
-public class Myuser extends Model<Myuser> {
+@Data
+public class Myuser extends Model<Myuser> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     //自增主键
     private Integer id;
     //模拟数据
