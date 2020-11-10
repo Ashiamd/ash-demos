@@ -33,12 +33,12 @@ services:
     ports:
       - 8081:8081
     depends_on: 
-      - mysql_demo
+      - mysqldemo
 
   ######################################## mysql ########################################
 
   # mysql
-  mysql_demo:
+  mysqldemo:
     build: ./mysql
     command: --default-authentication-plugin=mysql_native_password
     environment:
