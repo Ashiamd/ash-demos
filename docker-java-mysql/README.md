@@ -9,3 +9,5 @@
 + 直接在docker_config目录执行`docker-compose`就好了。
 
   （当然前提开启了docker服务，且安装了docker-compose）
+
+最后，如果正常运行,在url输入 `http://localhost:8081/api/test`就能看到数据库插入的100条数据了
