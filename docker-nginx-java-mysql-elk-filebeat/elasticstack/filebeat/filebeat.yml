@@ -1,0 +1,41 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+- type: log
+  enabled: true # 表示开启日志收集
+  paths:
+    - /usr/share/filebeat/nginx-logs/*.access.log  # nginx的访问日志
+  fields:
+    log_source: nginx-access # 传递给ES的index
+
+- type: log
+  enabled: true
+  paths:
+    - /usr/share/filebeat/nginx-logs/*.error.log  # nginx的错误日志
+  fields:
+    log_source: nginx-error
+
+output.logstash:
+  hosts: ["logstash:5044"]
+setup.kibana:
+  host: "kibana:5601"
+
+
+
+
+
+
+
+# filebeat.inputs:
+# - type: log
+#   paths:
+#     - /usr/share/filebeat/mydocs/test.log
+
+# output.logstash:
+#   hosts: ["logstash:5044"]
+
+# setup.kibana:
+#   host: "kibana:5601"

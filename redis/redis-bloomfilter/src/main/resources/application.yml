@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: redis-bloomfilter
+  # 选择使用的yml配置文件
+  profiles:
+    active: local
+
+server:
+  port: 8089
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: info
+  file:
+    path: logs
+

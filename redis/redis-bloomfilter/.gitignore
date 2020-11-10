@@ -1,0 +1,49 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+<<<<<<< HEAD
+
+
+### ignore
+.DS_Store
+redis/.DS_Store
+redis/redis-bloomfilter/.gitignore
+redis/redis-bloomfilter/.mvn/
+redis/redis-bloomfilter/logs/
+redis/redis-bloomfilter/mvnw
+redis/redis-bloomfilter/mvnw.cmd
+redis/redis-bloomfilter/src/main/java/com/test/ash/redis/RedisBloomfilterApplication.java
+redis/redis-bloomfilter/src/test/
+redis/redis-bloomfilter/test.txt
+=======
+>>>>>>> 03c0cabf1595f5675431063ce9ebb614e1b3e707
