@@ -1,0 +1,25 @@
+version: '3'
+
+networks: # 使用 自建网桥网络
+  demo:
+    driver: bridge
+
+services:
+
+  # java
+  java_demo:
+    build: ./java
+    restart: on-failure
+    ports:
+      - 8081:8081
+    depends_on: 
+      - mysql_demo
+  # mysql
+  mysql_demo:
+    build: ./mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: "Asia/Shanghai"
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
