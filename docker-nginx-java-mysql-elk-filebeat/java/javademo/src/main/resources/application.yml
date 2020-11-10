@@ -1,0 +1,69 @@
+
+spring:
+  #数据库配置
+  datasource:
+    #数据库连接池类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysqldemo:3306/demo?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: example
+    # druid连接池配置
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      time-between-eviction-runsMillis: 60000
+      min-evictable-idle-timeMillis: 300000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      # 断线重连
+      break-after-acquire-failure: true
+      time-between-connect-error-millis: 300000
+      # 拦截器：stat-SQL监控统计，wall-防御sql注入，slf4j-日志记录
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          enabled: true
+          # 慢查询日志
+          log-slow-sql: true
+          slow-sql-millis: 10000
+          merge-sql: true
+        wall:
+          enabled: true
+          db-type: mysql
+          config:
+            # alter-table-allow: false
+            drop-table-allow: false
+            # delete-allow: false
+            truncate-allow: false
+      useGlobalDataSourceStat: true
+      # 网络url统计
+      web-stat-filter:
+        enabled: true
+        profile-enable: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      # 监控界面
+      stat-view-servlet:
+        allow: # 不填写具体值，所有ip都可以访问，删掉这个字段则只有启动该项目的ip能访问
+        enabled: true
+        url-pattern: /druid/*
+        login-username: root
+        login-password: example
+
+# 日志
+logging:
+  level:
+    druid.sql: debug
+    # 打印mapper包的日志
+    com.ashiamd.ashspringboot.mapper: debug
+server:
+  port: 8081
+  servlet:
+    context-path: /api
