@@ -1,5 +1,5 @@
 # HELP
-
+> [docker-compose部署springboot+mysql(mysql制作镜像时执行指定sql文件)](https://www.cnblogs.com/Ashiamd/p/13954443.html)
 + demo目录就是java项目代码
 
   （jar包已经在docker_config目录放好了，可以不需要在自己生成了）
