@@ -1,0 +1,101 @@
+version: '3'
+
+networks: # 使用 自建网桥网络
+  mydemo:
+    driver: bridge
+
+services:
+
+  ########################################  nginx  ########################################
+
+  # nginx
+  mynginx:
+    image: nginx:stable
+    # restart: on-failure
+    volumes:
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/config/conf.d:/etc/nginx/conf.d
+      - ./nginx/log/nginx:/var/log/nginx
+      - ./nginx/data/html:/usr/share/nginx/html
+    ports:
+      - 80:80
+      - 8080:80
+      - 443:443
+    links: 
+      - javademo
+    
+  ########################################  java  ########################################
+  
+  # java
+  javademo: # 改名叫 java_demo的话，nginx那里配置http://java_demo:8081;一直无法生效，迷 
+    build: ./java
+    restart: on-failure
+    ports:
+      - 8081:8081
+    depends_on: 
+      - mysql_demo
+
+  ######################################## mysql ########################################
+
+  # mysql
+  mysql_demo:
+    build: ./mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: "Asia/Shanghai"
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - 3306:3306
+    
+  ########################################  ELK + FileBeat  ########################################
+
+  # Elastic-Search
+  elasticsearch:
+    image: elasticsearch:7.9.3
+    environment:
+      - TZ=Asia/Shanghai
+      - "cluster.name=EScluster" #设置集群名称为 EScluster
+      - "discovery.type=single-node" #以单一节点模式启动
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
+    volumes: 
+      - ./elasticstack/elasticsearch/es01/data:/usr/share/elasticsearch/data
+      - ./elasticstack/elasticsearch/es01/logs:/usr/share/elasticsearch/logs
+      - ./elasticstack/elasticsearch/es01/mydocs:/usr/share/elasticsearch/mydocs
+    ports:
+      - 9200:9200
+      - 9300:9300
+  
+  # FileBeat
+  filebeat:
+    image: store/elastic/filebeat:7.9.3
+    volumes:
+      - ./elasticstack/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./elasticstack/filebeat/logs:/usr/share/filebeat/logs
+      - ./elasticstack/filebeat/mydocs:/usr/share/filebeat/mydocs
+      - ./nginx/log/nginx:/usr/share/filebeat/nginx-logs
+    environment:
+      - TZ=Asia/Shanghai
+
+  # LogStash
+  logstash:
+    image: logstash:7.9.3
+    volumes:
+      - ./elasticstack/logstash/config:/usr/share/logstash/config     # logstash 配置文件目录
+      - ./elasticstack/logstash/pipeline:/usr/share/logstash/pipeline # logstash 的采集与输入的配置文件目录
+      - ./elasticstack/logstash/mydocs:/usr/share/logstash/mydocs
+    environment:
+      - TZ=Asia/Shanghai
+      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+    
+  # Kibana
+  kibana:
+    image: kibana:7.9.3
+    environment:
+      - TZ=Asia/Shanghai
+      - "elasticsearch.hosts=http://elasticsearch:9200" #设置访问elasticsearch的地址
+    links:
+      - elasticsearch
+    depends_on: 
+      - elasticsearch # 在elastic-search节点01启动后再启动
+    ports:
+      - 5601:5601
