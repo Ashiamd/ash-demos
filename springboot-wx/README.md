@@ -12,4 +12,4 @@ ps：当然上述操作，需要先有在微信公众号开发那边申请了账
 
 
 
-对应CSDN文章 => []()
+对应CSDN文章 => [微信公众号开发-后端demo（随录）](https://blog.csdn.net/Ashiamd/article/details/110430605)
