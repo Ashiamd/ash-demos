@@ -1,0 +1,12 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: wx-test
+
+logging:
+  level:
+    root: info
+  file:
+    path: logs
